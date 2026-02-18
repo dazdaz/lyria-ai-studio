@@ -40,7 +40,9 @@ export function TransportControls() {
   const { 
     elapsedTime,
     setElapsedTime,
-    apiKey, 
+    apiKey,
+    vertexProjectId,
+    vertexAccessToken,
     trackLength, 
     setTrackLength,
     preGenerateMode,
@@ -313,7 +315,11 @@ export function TransportControls() {
     }
   }
 
-  const canPlay = selectedModel === "musicgen" ? true : !!apiKey
+  const canPlay = selectedModel === "musicgen" 
+    ? true 
+    : (selectedModel === "lyria2" || selectedModel === "lyria3")
+    ? !!(vertexProjectId && vertexAccessToken)
+    : !!apiKey
 
   return (
     <div className="flex items-center gap-4 px-4 py-3 bg-surface-elevated rounded-xl border border-border shrink-0">
@@ -345,6 +351,8 @@ export function TransportControls() {
             {!canPlay 
               ? selectedModel === "musicgen" 
                 ? "MusicGen is ready - no API key needed!" 
+                : (selectedModel === "lyria2" || selectedModel === "lyria3")
+                ? "Add your Vertex AI Project ID and Access Token in Settings first"
                 : "Add your Gemini API key in Settings first"
               : isGenerating
                 ? "Stop music generation" 
