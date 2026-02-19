@@ -318,6 +318,8 @@ export class LyriaClient {
           } else {
             errorMessage = `${modelLabel} model not found in project '${vertexProjectId}'. Verify your Project ID and Region are correct, and that the Vertex AI API is enabled.\n\nSee: docs.cloud.google.com/vertex-ai/generative-ai/docs/music/generate-music`
           }
+        } else if (errorMessage.toLowerCase().includes("recitation")) {
+          errorMessage = `Prompt blocked by Google's copyright safety filter.\n\nTry a more original prompt — avoid referencing specific artists, song names, or well-known styles like "Lo-Fi Hip Hop". Use the Random button for a safe prompt.`
         }
         
         this.onError?.(errorMessage)

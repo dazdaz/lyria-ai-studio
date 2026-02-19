@@ -12,20 +12,20 @@ const INSTRUMENTS = [
 
 const GENRES = [
   "Acid Jazz", "Afrobeat", "Ambient", "Baroque", "Bluegrass", "Blues",
-  "Bossa Nova", "Breakbeat", "Celtic Folk", "Chillout", "Chiptune", "Classic Rock",
-  "Deep House", "Disco Funk", "Drum & Bass", "Dubstep", "EDM", "Electro Swing",
-  "Funk", "G-funk", "Glitch Hop", "Grime", "Hyperpop", "Indian Classical",
-  "Indie Electronic", "Indie Folk", "Indie Pop", "Irish Folk", "Jazz Fusion",
-  "Latin Jazz", "Lo-Fi Hip Hop", "Minimal Techno", "Neo-Soul", "Orchestral",
-  "Piano Ballad", "Post-Punk", "Psytrance", "R&B", "Reggae", "Reggaeton",
+  "Bossa Nova", "Breakbeat", "Celtic Folk", "Chillout", "Chiptune",
+  "Deep House", "Disco Funk", "Drum and Bass", "EDM", "Electro Swing",
+  "Funk", "Glitch Hop", "Indie Electronic", "Indie Folk", "Indie Pop",
+  "Irish Folk", "Jazz Fusion", "Latin Jazz", "Minimal Techno", "Neo-Soul",
+  "Orchestral", "Piano Ballad", "Post-Punk", "Psytrance", "Reggae",
   "Salsa", "Shoegaze", "Ska", "Surf Rock", "Synthpop", "Techno", "Trance",
-  "Trap", "Trip Hop", "Vaporwave"
+  "Trip Hop", "Cinematic Score", "World Fusion", "Downtempo", "Progressive Rock"
 ]
 
 const MOODS = [
   "ambient", "bright", "chill", "danceable", "dreamy", "emotional", "ethereal",
-  "experimental", "funky", "groovy", "hypnotic", "intense", "lo-fi", "melancholic",
-  "peaceful", "psychedelic", "relaxing", "upbeat", "uplifting", "dark", "energetic"
+  "experimental", "funky", "groovy", "hypnotic", "intense", "melancholic",
+  "peaceful", "psychedelic", "relaxing", "upbeat", "uplifting", "dark", "energetic",
+  "nostalgic", "warm", "spacious", "driving"
 ]
 
 const TEMPOS = [
@@ -55,7 +55,7 @@ const PRODUCTION_STYLES = [
   "heavily processed with creative effects and spatial mixing",
   "warm vintage analog production with subtle tape saturation",
   "modern hi-fi production with crisp transients and wide stereo field",
-  "lo-fi aesthetic with vinyl crackle and muted frequencies"
+  "soft ambient production with gentle compression and airy reverb"
 ]
 
 function pickOne<T>(arr: T[]): T {
@@ -124,7 +124,7 @@ export function getDefaultPrompt(model: ModelKey): string {
     case "realtime":
       return "Ambient electronic, Piano and Synth Pads, chill, 90 bpm"
     case "lyria2":
-      return "Lo-Fi Hip Hop track featuring Rhodes Piano and Vinyl Drums, relaxing mood, 85 bpm, with warm analog sound"
+      return "Jazz Fusion track featuring Rhodes Piano and Alto Saxophone, warm and relaxing mood, 85 bpm, with vintage tone"
     case "lyria3":
       return "Neo-Soul track featuring Rhodes Piano, Cello, and Moog Synth, dreamy mood, 95 bpm. Building from minimal to full arrangement. Warm vintage analog production with subtle tape saturation, with rich harmonies"
     case "musicgen":
