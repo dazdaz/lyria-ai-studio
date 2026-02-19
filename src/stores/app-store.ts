@@ -231,7 +231,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   setTrackLength: (length) => set({ trackLength: length }),
   setPreGenerateMode: (mode) => set({ preGenerateMode: mode }),
   setSelectedModel: (model) => set({ selectedModel: model }),
-  setLyriaModel: (model) => set({ lyriaModel: model }),
+  setLyriaModel: (model) => set({ lyriaModel: model, connectionError: null }),
   setVertexProjectId: (projectId) => set({ vertexProjectId: projectId }),
   setVertexRegion: (region) => set({ vertexRegion: region }),
   setVertexAccessToken: (token) => set({ vertexAccessToken: token }),
