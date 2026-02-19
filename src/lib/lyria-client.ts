@@ -328,7 +328,16 @@ export class LyriaClient {
       const data = await response.json()
       console.log(`${logTag} Response data:`, data)
 
-      if (data.predictions?.[0]?.audio) {
+      if (data.predictions?.[0]?.bytesBase64Encoded) {
+        console.log(`${logTag} Got bytesBase64Encoded audio data!`)
+        this.onStatusChange?.(`${modelLabel}: Processing audio...`)
+        
+        const audioBase64 = data.predictions[0].bytesBase64Encoded
+        const audioBuffer = this.base64ToArrayBuffer(audioBase64)
+        
+        this.streamAudioBuffer(audioBuffer)
+        this.onStatusChange?.(`${modelLabel}: Playing...`)
+      } else if (data.predictions?.[0]?.audio) {
         console.log(`${logTag} Got audio data!`)
         this.onStatusChange?.(`${modelLabel}: Processing audio...`)
         
