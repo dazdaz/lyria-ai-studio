@@ -360,7 +360,7 @@ export class LyriaClient {
     let offset = 0
 
     const sendChunk = () => {
-      if (offset >= buffer.length || !this.isGenerating) {
+      if (offset >= buffer.byteLength || !this.isGenerating) {
         this.onStatusChange?.("Stopped")
         return
       }
@@ -369,7 +369,7 @@ export class LyriaClient {
       this.onAudioChunk?.(chunk)
       offset += chunkSize
 
-      if (offset < buffer.length && this.isGenerating) {
+      if (offset < buffer.byteLength && this.isGenerating) {
         setTimeout(sendChunk, 180)
       } else {
         this.onStatusChange?.("Generation complete")

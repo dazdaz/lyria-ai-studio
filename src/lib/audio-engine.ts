@@ -946,7 +946,7 @@ export class AudioEngine {
   async updateConfig(): Promise<void> {
     if (!this.lyriaClient || !this.isPlaying) return
     const config = buildConfigFromStore()
-    await this.lyriaClient.updateConfig(config)
+    await this.lyriaClient.startGeneration(config)
   }
 
   startRecording(): void {

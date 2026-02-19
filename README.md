@@ -83,7 +83,6 @@ Multi-model support including Google Lyria Realtime, Lyria 2, Lyria 3, Meta Musi
 #### For Google Lyria 2 / Lyria 3 (Vertex AI)
 - Google Cloud project with billing enabled
 - Vertex AI API enabled
-- Allowlist approval from Google (Lyria 2: `lyria-002`, Lyria 3: `lyria-003`)
 - OAuth2 access token (expires hourly)
 
 ---
@@ -207,22 +206,19 @@ The free Hugging Face Inference API is no longer available. You would need a Pro
 
 ### Option 3: Google Lyria 2 (Vertex AI)
 
-**Note:** Google Lyria 2 requires Vertex AI access approval. Most users will encounter a 404 error without it. **Use Google Lyria Realtime instead unless you have explicit access.**
-
 #### Vertex AI Setup (shared by Lyria 2 and Lyria 3)
 
-1. Apply for access at [Vertex AI Music Generation](https://cloud.google.com/vertex-ai/generative-ai/docs/music/overview)
-2. Set up a [Google Cloud project](https://console.cloud.google.com/) with billing enabled
-3. Enable the Vertex AI API:
+1. Set up a [Google Cloud project](https://console.cloud.google.com/) with billing enabled
+2. Enable the Vertex AI API:
    ```bash
    gcloud services enable aiplatform.googleapis.com --project=YOUR_PROJECT_ID
    ```
-4. Install the Cloud SDK and authenticate:
+3. Install the Cloud SDK and authenticate:
    ```bash
    brew install --cask google-cloud-sdk
    gcloud init && gcloud auth login
    ```
-5. Generate an access token (expires after 1 hour):
+4. Generate an access token (expires after 1 hour):
    ```bash
    gcloud auth print-access-token
    ```
@@ -286,7 +282,7 @@ And update the Access Token in Settings.
 | **API endpoint** | Vertex AI `v1` (`:predict`) | Vertex AI `v1` (`:predict`) |
 | **Authentication** | GCP access token | GCP access token (same setup) |
 | **Pricing** | Paid (GCP billing) | Paid (GCP billing) |
-| **Access** | Limited preview / allowlist | Limited preview / allowlist |
+| **Access** | Generally available | Generally available |
 
 **When to use Lyria 3 over Lyria 2:**
 - You need longer, more descriptive prompts (up to 1000 chars)
@@ -392,10 +388,10 @@ gcloud auth print-access-token
 Update the token in Settings → Vertex AI → Access Token
 
 #### "Model not found" (Lyria 2 / Lyria 3)
-**Cause:** Your project doesn't have Lyria 2 or Lyria 3 access  
+**Cause:** Vertex AI API not enabled or incorrect Project ID / Region  
 **Solution:**
-- Apply for access at [Vertex AI Music Docs](https://cloud.google.com/vertex-ai/generative-ai/docs/music/overview)
-- Switch to Google Lyria Realtime in Settings
+- Ensure Vertex AI API is enabled: `gcloud services enable aiplatform.googleapis.com`
+- Verify your Project ID and Region in Settings
 
 #### "Invalid API Key" (Google Lyria Realtime)
 **Cause:** API key is incorrect or revoked  
@@ -494,8 +490,8 @@ This app uses **Google Lyria** (Realtime, Lyria 2, and Lyria 3), but there are m
 |-------|--------|----------|--------|-----|-----------|
 | **Suno** | ⭐⭐⭐⭐⭐ | Complete songs with lyrics | ✅ | ❌ | ❌ |
 | **Udio** | ⭐⭐⭐⭐⭐ | High-fidelity complex music | ✅ | ❌ | ❌ |
-| **Lyria 3** | ⭐⭐⭐⭐⭐ | Highest quality batch generation | ❌ | ✅ | ❌ |
-| **Lyria 2** | ⭐⭐⭐⭐½ | Batch generation via Vertex AI | ❌ | ✅ | ❌ |
+| **Lyria 3** | ⭐⭐⭐⭐⭐ | Highest quality batch generation | ✅ | ✅ | ❌ |
+| **Lyria 2** | ⭐⭐⭐⭐½ | Batch generation via Vertex AI | ✅ | ✅ | ❌ |
 | **Lyria Realtime** | ⭐⭐⭐⭐½ | Real-time/interactive | ❌ | ✅ | ❌ |
 | **MusicGen** | ⭐⭐⭐⭐ | Instrumentals & self-hosting | ❌ | ✅ | ✅ |
 | **Stable Audio** | ⭐⭐⭐½ | Sound FX & short samples | ❌ | ✅ | ✅ |
@@ -506,6 +502,7 @@ This app uses **Google Lyria** (Realtime, Lyria 2, and Lyria 3), but there are m
 - ✅ Real-time parameter control
 - ✅ Official API with SDKs
 - ✅ Good instrumental quality
+- ✅ Lyrics/vocals support (Lyria 2 & 3)
 
 **For detailed comparisons, pricing, and links:** See [MODELS_COMPARISON.md](./MODELS_COMPARISON.md)
 

@@ -34,7 +34,7 @@ This document compares **12 AI music generation models** across various dimensio
 
 ### 🎯 Key Capabilities
 
-- **With Vocals:** 4 models (Suno, Udio, Minimax Music 2.5, ElevenLabs Music)
+- **With Vocals:** 6 models (Suno, Udio, Minimax Music 2.5, ElevenLabs Music, Google Lyria 2, Google Lyria 3)
 - **Real-Time Generation:** 1 model (Google Lyria Realtime)
 - **API Access:** 9 models (varies by pricing)
 - **Self-Hostable:** 5 models (all open source)
@@ -193,7 +193,7 @@ Udio specializes in high-fidelity music generation with exceptional detail in co
 - [Google Cloud Vertex AI](https://cloud.google.com/vertex-ai/generative-ai/docs/music/overview) (Google Lyria 2)
 
 #### Overview
-Google's Lyria models focus on interactive, low-latency generation for gaming, live performances, and real-time applications. Available in two variants: RealTime (streaming) and Google Lyria 2 (batch).
+Google's Lyria models focus on interactive, low-latency generation for gaming, live performances, and real-time applications. Available in three variants: Realtime (streaming), Google Lyria 2 (batch), and Google Lyria 3 (batch, highest quality). Lyria 2 and Lyria 3 also support lyrics/vocals generation.
 
 **Model Size:** Unknown (Google proprietary, not publicly disclosed)
 
@@ -202,7 +202,7 @@ Google's Lyria models focus on interactive, low-latency generation for gaming, l
 |----------|-------|-------|
 | **Audio Quality** | ⭐⭐⭐⭐ | High quality, not quite Suno/Udio |
 | **Ease of Use** | ⭐⭐⭐⭐ | API-first, requires dev knowledge |
-| **Vocal Quality** | ❌ | Instrumental only |
+| **Vocal Quality** | ❌ (Realtime) / ✅ (Lyria 2 & 3) | Lyria 2 and 3 support lyrics |
 | **Flexibility** | ⭐⭐⭐⭐⭐ | Extensive real-time controls |
 | **Cost** | ⭐⭐⭐⭐⭐ | Free tier generous |
 | **Latency** | ⭐⭐⭐⭐⭐ | Ultra-low (~2 seconds) |
@@ -224,9 +224,9 @@ Google's Lyria models focus on interactive, low-latency generation for gaming, l
 - **API Access:** ✅ YES (JavaScript/Python SDKs)
 - **Self-Hosting:** ❌ Not possible
 
-##### Google Lyria 2 (Limited Preview)
+##### Google Lyria 2
 - **Type:** Cloud API (Google Cloud Vertex AI)
-- **Account Required:** YES + GCP project + Allowlist approval
+- **Account Required:** YES + GCP project
 - **Free Tier:** ❌ (GCP billing required)
 - **Paid Plans:** Pay-per-use
 - **API Access:** ✅ YES (REST API)
@@ -239,14 +239,14 @@ Google's Lyria models focus on interactive, low-latency generation for gaming, l
 ✅ Free tier available (RealTime)  
 ✅ Official API with SDKs  
 ✅ Good instrumental quality  
+✅ Lyrics/vocals support (Lyria 2 & 3)  
 ✅ Google Cloud integration
 
 #### Limitations
-❌ No vocals/lyrics  
-❌ Google Lyria 2 requires allowlist approval  
+❌ No vocals/lyrics (Realtime only)  
 ❌ Cannot self-host  
 ❌ Smaller community than Suno/Udio  
-❌ Access tokens expire (Google Lyria 2)
+❌ Access tokens expire (Google Lyria 2 & 3)
 
 #### Comparison: RealTime vs Google Lyria 2
 
@@ -256,7 +256,7 @@ Google's Lyria models focus on interactive, low-latency generation for gaming, l
 | **Streaming** | Yes (continuous) | No (batch) |
 | **Prompt Length** | **200 chars** | **500 chars** |
 | **Setup** | Gemini API key | GCP + Vertex AI + Token |
-| **Access** | ✅ Free tier | ⚠️ Requires approval |
+| **Access** | ✅ Free tier | ✅ Generally available (GCP billing) |
 | **Best For** | Real-time/interactive | High-quality batch |
 
 #### Prompt Guidelines
@@ -880,7 +880,7 @@ Understanding prompt length limits is crucial for getting the best results:
 | Feature             | Suno     | Udio     | Lyria RT | Google Lyria 2  | MusicGen ⚠️   | Stable Audio | Mustango |
 |---------------------|----------|----------|----------|----------|---------------|--------------|----------|
 | **Parameters**      | ~10B+    | ~8B+     | Unknown  | Unknown  | 0.3B-3.3B     | ~1.5B        | ~1B      |
-| **Vocals/Lyrics**   | ✅       | ✅       | ❌       | ❌       | ❌            | ❌           | ❌       |
+| **Vocals/Lyrics**   | ✅       | ✅       | ❌       | ✅       | ❌            | ❌           | ❌       |
 | **Instrumentals**   | ✅       | ✅       | ✅       | ✅       | ✅            | ✅           | ✅       |
 | **Real-time**       | ❌       | ❌       | ✅       | ❌       | ❌            | ❌           | ❌       |
 | **API Access**      | ❌       | ❌       | ✅       | ✅       | 💰 Paid       | ✅           | ✅       |
@@ -1015,6 +1015,7 @@ Understanding prompt length limits is crucial for getting the best results:
 - Low latency (~2 seconds)
 - Official API support
 - Good instrumental quality
+- Lyrics/vocals support (Lyria 2 & 3)
 - Ideal for interactive applications
 
 **Lyria AI Studio supports:**
@@ -1029,8 +1030,8 @@ Understanding prompt length limits is crucial for getting the best results:
 ## 🆚 Lyria vs Competitors
 
 ### Lyria vs Suno/Udio
-- **Lyria Wins:** Latency, API access, free tier, real-time control
-- **Suno/Udio Win:** Vocals, song structure, ease of use, quality
+- **Lyria Wins:** Latency, API access, free tier, real-time control, lyrics support (Lyria 2 & 3)
+- **Suno/Udio Win:** Song structure, ease of use, quality
 
 ### Lyria vs MusicGen
 - **Lyria Wins:** Latency, API simplicity, quality, **free tier availability**
