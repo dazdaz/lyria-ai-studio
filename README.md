@@ -515,7 +515,7 @@ This app uses **Google Lyria** (Realtime, Lyria 2, and Lyria 3), but there are m
 | Resource | URL |
 |----------|-----|
 | **Google Lyria Realtime Overview** | [ai.google.dev/gemini-api/docs/music-generation](https://ai.google.dev/gemini-api/docs/music-generation) |
-| **Vertex AI Music (Google Lyria 2)** | [cloud.google.com/vertex-ai/generative-ai/docs/music/overview](https://cloud.google.com/vertex-ai/generative-ai/docs/music/overview) |
+| **Vertex AI Music (Google Lyria 2)** | [docs.cloud.google.com/vertex-ai/generative-ai/docs/music/generate-music](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/music/generate-music) |
 | **Gemini API Quickstart** | [ai.google.dev/gemini-api/docs/quickstart](https://ai.google.dev/gemini-api/docs/quickstart) |
 | **Get API Key** | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) |
 | **Python Cookbook Example** | [github.com/google-gemini/cookbook/blob/main/quickstarts/Get_started_LyriaRealTime.py](https://github.com/google-gemini/cookbook/blob/main/quickstarts/Get_started_LyriaRealTime.py) |

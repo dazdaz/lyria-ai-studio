@@ -190,7 +190,7 @@ Udio specializes in high-fidelity music generation with exceptional detail in co
 
 **Official Sites:**
 - [Google AI Studio](https://aistudio.google.com) (Google Lyria Realtime)
-- [Google Cloud Vertex AI](https://cloud.google.com/vertex-ai/generative-ai/docs/music/overview) (Google Lyria 2)
+- [Google Cloud Vertex AI](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/music/generate-music) (Google Lyria 2)
 
 #### Overview
 Google's Lyria models focus on interactive, low-latency generation for gaming, live performances, and real-time applications. Available in three variants: Realtime (streaming), Google Lyria 2 (batch), and Google Lyria 3 (batch, highest quality). Lyria 2 and Lyria 3 also support lyrics/vocals generation.
@@ -987,7 +987,7 @@ Understanding prompt length limits is crucial for getting the best results:
 - [ElevenLabs Music](https://elevenlabs.io/music) 🆕
 - [Producer.ai (Riffusion)](https://www.producer.ai/) 🆕
 - [Google AI Studio (Lyria)](https://aistudio.google.com)
-- [Google Cloud Vertex AI](https://cloud.google.com/vertex-ai/generative-ai/docs/music)
+- [Google Cloud Vertex AI](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/music/generate-music)
 
 ### Open Source Models
 - [MusicGen (Meta)](https://github.com/facebookresearch/audiocraft)
