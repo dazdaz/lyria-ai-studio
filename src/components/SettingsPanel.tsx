@@ -169,7 +169,10 @@ export function SettingsPanel() {
       }
       await saveSettings()
       setSaved(true)
-      setTimeout(() => setSaved(false), 2000)
+      setTimeout(() => {
+        setSaved(false)
+        setSettingsOpen(false)
+      }, 800)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to save")
     } finally {
