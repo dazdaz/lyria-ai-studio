@@ -21,6 +21,10 @@
 
 > **Note:** Lyria 3 is currently only available in the Gemini app — not yet on the Vertex AI API. Use Lyria 2 or Lyria Realtime.
 
+
+<img width="1512" height="884" alt="Screenshot 2026-02-19 at 20 29 19" src="https://github.com/user-attachments/assets/9b5d5829-c435-42ba-9be4-83e59d18f1a6" />
+
+
 ---
 
 ## Quick Start
