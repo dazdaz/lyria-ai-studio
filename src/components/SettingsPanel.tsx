@@ -359,7 +359,7 @@ export function SettingsPanel() {
           <SettingRow
             title="Access Token"
             description="Run: gcloud auth print-access-token"
-            link={{ url: "https://cloud.google.com/vertex-ai/generative-ai/docs/music/overview", text: "Setup Guide" }}
+            link={{ url: "https://docs.cloud.google.com/vertex-ai/generative-ai/docs/music/generate-music", text: "Setup Guide" }}
           >
             <div className="relative w-full">
               <Input
