@@ -16,6 +16,10 @@ const ENCRYPTION_KEY: &[u8; 32] = b"LyriaStudioSecretKey2024!@#$%^&*";
 #[derive(Serialize, Deserialize, Default)]
 pub struct Settings {
     pub api_key_encrypted: Option<String>,
+    pub vertex_project_id: Option<String>,
+    pub vertex_region: Option<String>,
+    pub vertex_access_token_encrypted: Option<String>,
+    pub lyria_model: Option<String>,
     pub show_api_key: bool,
     pub theme: String,
     pub presets: Vec<Preset>,
@@ -100,12 +104,32 @@ fn get_api_key() -> Result<Option<String>, String> {
 }
 
 #[tauri::command]
+fn save_vertex_access_token(token: String) -> Result<(), String> {
+    let encrypted = encrypt_string(&token)?;
+    let mut settings = load_settings_internal().unwrap_or_default();
+    settings.vertex_access_token_encrypted = Some(encrypted);
+    save_settings_internal(&settings)
+}
+
+#[tauri::command]
+fn get_vertex_access_token() -> Result<Option<String>, String> {
+    let settings = load_settings_internal().unwrap_or_default();
+    match settings.vertex_access_token_encrypted {
+        Some(encrypted) => Ok(Some(decrypt_string(&encrypted)?)),
+        None => Ok(None),
+    }
+}
+
+#[tauri::command]
 fn save_settings(settings_json: String) -> Result<(), String> {
     let mut settings: Settings = serde_json::from_str(&settings_json)
         .map_err(|e| format!("Failed to parse settings: {}", e))?;
     
     if let Some(existing) = load_settings_internal().ok() {
         settings.api_key_encrypted = existing.api_key_encrypted;
+        if settings.vertex_access_token_encrypted.is_none() {
+            settings.vertex_access_token_encrypted = existing.vertex_access_token_encrypted;
+        }
     }
     
     save_settings_internal(&settings)
@@ -363,6 +387,8 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             save_api_key,
             get_api_key,
+            save_vertex_access_token,
+            get_vertex_access_token,
             save_settings,
             load_settings,
             save_preset,

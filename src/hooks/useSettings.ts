@@ -5,20 +5,26 @@ import { useAppStore, type Preset } from "@/stores/app-store"
 const isTauri = () => "__TAURI_INTERNALS__" in window
 
 export function useSettings() {
-  // Select state individually to avoid re-renders on unrelated state changes (like analyzerData)
   const apiKey = useAppStore((state) => state.apiKey)
   const showApiKey = useAppStore((state) => state.showApiKey)
   const theme = useAppStore((state) => state.theme)
   const presets = useAppStore((state) => state.presets)
+  const vertexProjectId = useAppStore((state) => state.vertexProjectId)
+  const vertexRegion = useAppStore((state) => state.vertexRegion)
+  const vertexAccessToken = useAppStore((state) => state.vertexAccessToken)
+  const lyriaModel = useAppStore((state) => state.lyriaModel)
   
   const setApiKey = useAppStore((state) => state.setApiKey)
   const setShowApiKey = useAppStore((state) => state.setShowApiKey)
   const setTheme = useAppStore((state) => state.setTheme)
   const setPresets = useAppStore((state) => state.setPresets)
+  const setVertexProjectId = useAppStore((state) => state.setVertexProjectId)
+  const setVertexRegion = useAppStore((state) => state.setVertexRegion)
+  const setVertexAccessToken = useAppStore((state) => state.setVertexAccessToken)
+  const setLyriaModel = useAppStore((state) => state.setLyriaModel)
 
   const loadAttempted = useRef(false)
 
-  // Memoize loadSettings to prevent infinite loops in effects
   const loadSettings = useCallback(async () => {
     if (!isTauri()) {
       document.documentElement.setAttribute("data-theme", theme)
@@ -38,15 +44,29 @@ export function useSettings() {
       if (settings.presets) {
         setPresets(settings.presets)
       }
+      if (settings.vertex_project_id) {
+        setVertexProjectId(settings.vertex_project_id)
+      }
+      if (settings.vertex_region) {
+        setVertexRegion(settings.vertex_region)
+      }
+      if (settings.lyria_model) {
+        setLyriaModel(settings.lyria_model)
+      }
 
       const key = await invoke<string | null>("get_api_key")
       if (key) {
         setApiKey(key)
       }
+
+      const token = await invoke<string | null>("get_vertex_access_token")
+      if (token) {
+        setVertexAccessToken(token)
+      }
     } catch (err) {
       console.error("Failed to load settings:", err)
     }
-  }, [theme, setApiKey, setShowApiKey, setTheme, setPresets])
+  }, [theme, setApiKey, setShowApiKey, setTheme, setPresets, setVertexProjectId, setVertexRegion, setVertexAccessToken, setLyriaModel])
 
   useEffect(() => {
     if (!loadAttempted.current) {
@@ -80,13 +100,19 @@ export function useSettings() {
         show_api_key: showApiKey,
         theme,
         presets,
+        vertex_project_id: vertexProjectId,
+        vertex_region: vertexRegion,
+        lyria_model: lyriaModel,
       }
       await invoke("save_settings", { settingsJson: JSON.stringify(settings) })
+      if (vertexAccessToken) {
+        await invoke("save_vertex_access_token", { token: vertexAccessToken })
+      }
     } catch (err) {
       console.error("Failed to save settings:", err)
       throw err
     }
-  }, [showApiKey, theme, presets])
+  }, [showApiKey, theme, presets, vertexProjectId, vertexRegion, vertexAccessToken, lyriaModel])
 
   const savePreset = useCallback(async (preset: Preset) => {
     // Note: We can't use 'presets' from closure here if we want to avoid dependency loop
