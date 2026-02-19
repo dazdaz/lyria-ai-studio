@@ -434,30 +434,30 @@ Update the token in Settings → Vertex AI → Access Token
 ### Architecture
 
 ```
-┌─────────────────────────────────────────┐
-│          Tauri Desktop App             │
-│  ┌──────────────────────────────────┐  │
-│  │   React + TypeScript Frontend    │  │
-│  │  - Zustand State Management      │  │
-│  │  - Web Audio API (Visualizer)    │  │
-│  │  - Radix UI Components           │  │
-│  └──────────────────────────────────┘  │
-│  ┌──────────────────────────────────┐  │
-│  │      Audio Engine (TS)           │  │
-│  │  - Stream Processing             │  │
-│  │  - Buffer Management             │  │
-│  │  - Export (MP3/WAV)              │  │
-│  └──────────────────────────────────┘  │
-│  ┌──────────────────────────────────┐  │
-│  │     Lyria Client (TS)            │  │
-│  │  - RealTime: WebSocket (@google) │  │
-│  │  - Lyria 2/3: REST API (Vertex AI) │  │
-│  └──────────────────────────────────┘  │
-└─────────────────────────────────────────┘
-           │                    │
-           ▼                    ▼
-    Gemini API         Vertex AI REST API
-  (Google Lyria Realtime)    (Google Lyria 2 / 3)
+┌───────────────────────────────────────────────┐
+│              Tauri Desktop App                │
+│  ┌─────────────────────────────────────────┐  │
+│  │     React + TypeScript Frontend         │  │
+│  │  - Zustand State Management             │  │
+│  │  - Web Audio API (Visualizer)           │  │
+│  │  - Radix UI Components                  │  │
+│  └─────────────────────────────────────────┘  │
+│  ┌─────────────────────────────────────────┐  │
+│  │     Audio Engine (TS)                   │  │
+│  │  - Stream Processing                    │  │
+│  │  - Buffer Management                    │  │
+│  │  - Export (MP3/WAV)                     │  │
+│  └─────────────────────────────────────────┘  │
+│  ┌─────────────────────────────────────────┐  │
+│  │     Lyria Client (TS)                   │  │
+│  │  - RealTime: WebSocket (@google)        │  │
+│  │  - Lyria 2/3: REST API (Vertex AI)      │  │
+│  └─────────────────────────────────────────┘  │
+└───────────────────────────────────────────────┘
+              │                    │
+              ▼                    ▼
+       Gemini API         Vertex AI REST API
+  (Lyria Realtime)          (Lyria 2 / 3)
 ```
 
 ### Audio Specifications
