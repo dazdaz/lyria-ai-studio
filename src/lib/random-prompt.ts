@@ -30,6 +30,13 @@ const TEMPOS = [
   "slow tempo", "medium tempo", "fast tempo", "upbeat tempo", "relaxed tempo"
 ]
 
+const DESCRIPTORS = [
+  "with warm analog sound", "with lush reverb", "with crisp production",
+  "with layered textures", "with rich harmonies", "studio quality",
+  "with deep bass", "with sparkling highs", "with punchy drums",
+  "with wide stereo mix", "with vintage tone", "with modern production"
+]
+
 function pickOne<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)]
 }
@@ -43,20 +50,18 @@ export function generateRandomPrompt(): string {
   const genre = pickOne(GENRES)
   const mood = pickOne(MOODS)
   
-  const useInstruments = Math.random() > 0.4
+  const instruments = pickRandom(INSTRUMENTS, Math.random() > 0.5 ? 2 : 1)
   const useTempo = Math.random() > 0.5
+  const useDescriptor = Math.random() > 0.4
   
-  const parts: string[] = [genre]
-  
-  if (useInstruments) {
-    const instruments = pickRandom(INSTRUMENTS, Math.random() > 0.5 ? 2 : 1)
-    parts.push(instruments.join(" and "))
-  }
-  
-  parts.push(mood)
+  const parts: string[] = [genre, instruments.join(" and "), mood]
   
   if (useTempo) {
     parts.push(pickOne(TEMPOS))
+  }
+  
+  if (useDescriptor) {
+    parts.push(pickOne(DESCRIPTORS))
   }
   
   return parts.join(", ")
@@ -65,6 +70,7 @@ export function generateRandomPrompt(): string {
 export function generateSimpleRandomPrompt(): string {
   const genre = pickOne(GENRES)
   const mood = pickOne(MOODS)
-  return `${genre}, ${mood}`
+  const instrument = pickOne(INSTRUMENTS)
+  return `${genre}, ${instrument}, ${mood}`
 }
 
