@@ -18,7 +18,7 @@ Multi-model support including Google Lyria Realtime, Lyria 2, Lyria 3, Meta Musi
   - [Option 1: Google Lyria Realtime (Recommended)](#option-1-lyria-realtime-recommended)
   - [Option 2: MusicGen (Free, No API Key)](#option-2-musicgen-free-no-api-key)
   - [Option 3: Google Lyria 2 (Vertex AI)](#option-3-lyria-2-vertex-ai)
-  - [Option 4: Google Lyria 3 (Vertex AI - Latest)](#option-4-lyria-3-vertex-ai---latest)
+  - [Option 4: Google Lyria 3 (Gemini App Only)](#option-4-google-lyria-3-gemini-app-only)
 - [Lyria 3 vs Lyria 2](#-lyria-3-vs-lyria-2)
 - [Usage Guide](#-usage-guide)
 - [Troubleshooting](#-troubleshooting)
@@ -32,9 +32,11 @@ Multi-model support including Google Lyria Realtime, Lyria 2, Lyria 3, Meta Musi
 
 ### Core Generation
 - **Three Lyria Models**: Google Lyria Realtime (streaming), Lyria 2, and Lyria 3 (batch generation via Vertex AI)
+- **Lyrics/Vocals Support**: Lyria 2 and Lyria 3 support vocals and lyrics generation
 - **Real-time Audio Generation**: Continuous, never-ending music that evolves based on your prompts
 - **Ultra-Low Latency**: ~2 seconds from control change to audible effect
 - **Intelligent Prompt Processing**: Auto-detect BPM and key from text prompts
+- **Smart Random Prompts**: Model-aware prompt generator that produces rich, descriptive prompts tuned to each model's capabilities and character limits
 
 ### Parametric Controls
 - **BPM Control**: 60–200 BPM range with auto-detection from prompts
@@ -59,7 +61,8 @@ Multi-model support including Google Lyria Realtime, Lyria 2, Lyria 3, Meta Musi
 - **Three Themes**: Tokyo Night (default), Dark, Light
 - **Fullscreen Maximized Window**: All controls visible without scrolling
 - **Tooltips**: Contextual help for every control
-- **Secure Settings**: Encrypted API key storage
+- **Secure Settings**: Encrypted API key and access token storage, persisted across restarts
+- **Copyable Error Messages**: Error overlay text is selectable with a one-click copy button
 
 ---
 
@@ -240,17 +243,11 @@ dramatic timpani rolls, 140 bpm, epic fantasy adventure theme, key of D major
 
 ---
 
-### Option 4: Google Lyria 3 (Vertex AI - Latest)
+### Option 4: Google Lyria 3 (Gemini App Only)
 
-Google Lyria 3 (`lyria-003`) is the latest generation model available through Vertex AI. It uses the same Vertex AI setup as Lyria 2 (see above).
+> **Note:** Google Lyria 3 (`lyria-003`) launched on Feb 18, 2026 but is currently **only available in the Gemini app** — it is not yet exposed via the Vertex AI REST API. Selecting Lyria 3 in Lyria AI Studio will show an informative error message. Use **Lyria 2** or **Lyria Realtime** until Vertex AI API support is added.
 
-#### Configure in Lyria AI Studio
-
-1. Complete the [Vertex AI Setup](#vertex-ai-setup-shared-by-lyria-2-and-lyria-3) above
-2. Open **Settings**
-3. Under **"AI Model"**, select **"Google Lyria 3 (Vertex AI)"**
-4. Fill in **Project ID**, **Region**, and **Access Token**
-5. Click **"Save Changes"**
+Google Lyria 3 is the latest generation model with the highest quality output. When it becomes available on Vertex AI, it will use the same setup as Lyria 2 (see above).
 
 #### Generate with Lyria 3
 
@@ -312,9 +309,9 @@ Both models share the same Vertex AI credentials (Project ID, Region, Access Tok
 4. Higher weights = stronger influence
 
 **Examples:**
-- "deep house, 128 bpm, hypnotic bassline"
-- "lo-fi hip hop, jazzy chords, vinyl crackle"
-- "ambient drone, dark atmospheric pads"
+- "deep house, 128 bpm, hypnotic bassline, with warm analog sound"
+- "jazz fusion, Rhodes piano and upright bass, groovy, 110 bpm"
+- "ambient drone, dark atmospheric pads, with lush reverb"
 
 ### Negative Prompts
 
@@ -378,6 +375,22 @@ Enter what you DON'T want:
 - Remove potentially inappropriate content
 - Simplify the prompt
 - Avoid brand names or copyrighted references
+
+#### "Blocked by recitation checks" (Lyria 2)
+**Cause:** Google's copyright safety filter blocked the generated audio because the prompt may produce output too similar to copyrighted material  
+**Solution:**
+- Avoid referencing specific artists, song titles, or well-known styles (e.g., "Lo-Fi Hip Hop", "Trap", "G-funk")
+- Use more original and descriptive prompts with specific instruments, moods, and production details
+- Click the **Random** button to generate a safe, model-tuned prompt
+- Add more detail: instead of "chill beats" try "Jazz Fusion track featuring Rhodes Piano and Alto Saxophone, warm and relaxing mood, 85 bpm, with vintage tone"
+
+#### "Unsupported language detected" (Lyria 2)
+**Cause:** Lyria 2 on Vertex AI only accepts US English prompts. Short or terse prompts sometimes trigger the language detection filter incorrectly  
+**Solution:**
+- Ensure your prompt is in English only
+- Make the prompt more descriptive (include genre, instruments, mood, BPM)
+- Use the **Random** button for a well-structured prompt
+- Example: instead of "Shoegaze, lo-fi, medium tempo" try "Shoegaze indie rock with dreamy guitars and layered reverb, 100 bpm, ethereal mood"
 
 #### "Authentication failed" (Lyria 2 / Lyria 3)
 **Cause:** Access token expired (tokens last 1 hour)  
@@ -555,7 +568,8 @@ High-contrast light theme for bright environments
 ## 🔐 Security & Privacy
 
 - **API Keys**: Encrypted and stored locally via Tauri secure storage
-- **Access Tokens**: Stored in application state (expires in 1 hour)
+- **Access Tokens**: Encrypted and persisted locally (still expire after 1 hour on Google's side)
+- **Vertex AI Settings**: Project ID, region, and model selection saved across restarts
 - **No Telemetry**: No usage data is sent to external servers
 - **Local Processing**: All audio processing happens on your machine
 
