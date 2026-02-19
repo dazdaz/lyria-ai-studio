@@ -313,7 +313,11 @@ export class LyriaClient {
         if (response.status === 401 || response.status === 403) {
           errorMessage = "Authentication failed. Your access token may have expired. Run 'gcloud auth print-access-token' to get a new one."
         } else if (response.status === 404) {
-          errorMessage = `${modelLabel} model not found in project '${vertexProjectId}'. This model requires allowlist access. Apply at: cloud.google.com/vertex-ai/generative-ai/docs/music/overview\n\nTry using Google Lyria Realtime instead (works with free Gemini API key).`
+          if (this.modelType === "lyria3") {
+            errorMessage = `Google Lyria 3 (lyria-003) is not yet available on the Vertex AI API. It is currently only accessible via the Gemini app.\n\nUse Google Lyria 2 or Google Lyria Realtime instead.`
+          } else {
+            errorMessage = `${modelLabel} model not found in project '${vertexProjectId}'. Verify your Project ID and Region are correct, and that the Vertex AI API is enabled.\n\nSee: docs.cloud.google.com/vertex-ai/generative-ai/docs/music/generate-music`
+          }
         }
         
         this.onError?.(errorMessage)
