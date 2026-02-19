@@ -52,7 +52,7 @@ export function PromptMixer() {
   }
 
   const handleRandomPrompt = () => {
-    const randomPrompt = generateRandomPrompt()
+    const randomPrompt = generateRandomPrompt(selectedModel)
     if (prompts.length > 0) {
       updatePrompt(prompts[0].id, { text: randomPrompt })
     }

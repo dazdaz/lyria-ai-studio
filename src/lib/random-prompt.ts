@@ -1,3 +1,5 @@
+import type { ModelKey } from "@/lib/constants"
+
 const INSTRUMENTS = [
   "303 Acid Bass", "808 Hip Hop Beat", "Accordion", "Alto Saxophone", "Bagpipes",
   "Banjo", "Bass Clarinet", "Bongos", "Cello", "Conga Drums", "Didgeridoo",
@@ -27,7 +29,8 @@ const MOODS = [
 ]
 
 const TEMPOS = [
-  "slow tempo", "medium tempo", "fast tempo", "upbeat tempo", "relaxed tempo"
+  "60 bpm", "70 bpm", "80 bpm", "90 bpm", "100 bpm", "110 bpm", "120 bpm",
+  "130 bpm", "140 bpm", "150 bpm"
 ]
 
 const DESCRIPTORS = [
@@ -35,6 +38,24 @@ const DESCRIPTORS = [
   "with layered textures", "with rich harmonies", "studio quality",
   "with deep bass", "with sparkling highs", "with punchy drums",
   "with wide stereo mix", "with vintage tone", "with modern production"
+]
+
+const STRUCTURES = [
+  "building from minimal to full arrangement",
+  "with a slow atmospheric intro leading into a driving rhythm",
+  "starting sparse then layering instruments progressively",
+  "with dynamic crescendos and quiet breakdowns",
+  "alternating between intense sections and ambient interludes",
+  "with a cinematic build throughout"
+]
+
+const PRODUCTION_STYLES = [
+  "polished studio recording with clean separation between instruments",
+  "raw and organic live session feel with room ambiance",
+  "heavily processed with creative effects and spatial mixing",
+  "warm vintage analog production with subtle tape saturation",
+  "modern hi-fi production with crisp transients and wide stereo field",
+  "lo-fi aesthetic with vinyl crackle and muted frequencies"
 ]
 
 function pickOne<T>(arr: T[]): T {
@@ -46,31 +67,69 @@ function pickRandom<T>(arr: T[], count: number): T[] {
   return shuffled.slice(0, count)
 }
 
-export function generateRandomPrompt(): string {
+function generateRealtimePrompt(): string {
   const genre = pickOne(GENRES)
-  const mood = pickOne(MOODS)
-  
-  const instruments = pickRandom(INSTRUMENTS, Math.random() > 0.5 ? 2 : 1)
-  const useTempo = Math.random() > 0.5
-  const useDescriptor = Math.random() > 0.4
-  
-  const parts: string[] = [genre, instruments.join(" and "), mood]
-  
-  if (useTempo) {
-    parts.push(pickOne(TEMPOS))
-  }
-  
-  if (useDescriptor) {
-    parts.push(pickOne(DESCRIPTORS))
-  }
-  
-  return parts.join(", ")
-}
-
-export function generateSimpleRandomPrompt(): string {
-  const genre = pickOne(GENRES)
-  const mood = pickOne(MOODS)
   const instrument = pickOne(INSTRUMENTS)
-  return `${genre}, ${instrument}, ${mood}`
+  const mood = pickOne(MOODS)
+  const tempo = pickOne(TEMPOS)
+  return `${genre}, ${instrument}, ${mood}, ${tempo}`
 }
 
+function generateLyria2Prompt(): string {
+  const genre = pickOne(GENRES)
+  const instruments = pickRandom(INSTRUMENTS, 2)
+  const mood = pickOne(MOODS)
+  const tempo = pickOne(TEMPOS)
+  const descriptor = pickOne(DESCRIPTORS)
+  return `${genre} track featuring ${instruments[0]} and ${instruments[1]}, ${mood} mood, ${tempo}, ${descriptor}`
+}
+
+function generateLyria3Prompt(): string {
+  const genre = pickOne(GENRES)
+  const instruments = pickRandom(INSTRUMENTS, 3)
+  const mood = pickOne(MOODS)
+  const tempo = pickOne(TEMPOS)
+  const descriptor = pickOne(DESCRIPTORS)
+  const structure = pickOne(STRUCTURES)
+  const production = pickOne(PRODUCTION_STYLES)
+  return `${genre} track featuring ${instruments.join(", ")}, ${mood} mood, ${tempo}. ${structure}. ${production}, ${descriptor}`
+}
+
+function generateMusicgenPrompt(): string {
+  const genre = pickOne(GENRES)
+  const instruments = pickRandom(INSTRUMENTS, 2)
+  const mood = pickOne(MOODS)
+  const tempo = pickOne(TEMPOS)
+  const descriptor = pickOne(DESCRIPTORS)
+  return `${genre} with ${instruments[0]} and ${instruments[1]}, ${mood}, ${tempo}, ${descriptor}`
+}
+
+export function generateRandomPrompt(model: ModelKey = "realtime"): string {
+  switch (model) {
+    case "realtime":
+      return generateRealtimePrompt()
+    case "lyria2":
+      return generateLyria2Prompt()
+    case "lyria3":
+      return generateLyria3Prompt()
+    case "musicgen":
+      return generateMusicgenPrompt()
+    default:
+      return generateRealtimePrompt()
+  }
+}
+
+export function getDefaultPrompt(model: ModelKey): string {
+  switch (model) {
+    case "realtime":
+      return "Ambient electronic, Piano and Synth Pads, chill, 90 bpm"
+    case "lyria2":
+      return "Lo-Fi Hip Hop track featuring Rhodes Piano and Vinyl Drums, relaxing mood, 85 bpm, with warm analog sound"
+    case "lyria3":
+      return "Neo-Soul track featuring Rhodes Piano, Cello, and Moog Synth, dreamy mood, 95 bpm. Building from minimal to full arrangement. Warm vintage analog production with subtle tape saturation, with rich harmonies"
+    case "musicgen":
+      return "Indie Electronic with Guitar and Synth Pads, upbeat, 120 bpm, with crisp production"
+    default:
+      return "Ambient electronic, Piano and Synth Pads, chill, 90 bpm"
+  }
+}

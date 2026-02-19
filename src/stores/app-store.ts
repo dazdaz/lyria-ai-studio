@@ -1,4 +1,5 @@
 import { create } from "zustand"
+import { getDefaultPrompt } from "@/lib/random-prompt"
 
 function extractBpmFromText(text: string): number | null {
   const patterns = [
@@ -196,7 +197,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   vertexAccessToken: "",
   huggingFaceToken: "",
   musicgenModelSize: "medium",
-  prompts: [{ id: "1", text: "ambient electronic chill", weight: 1.0 }],
+  prompts: [{ id: "1", text: "Ambient electronic, Piano and Synth Pads, chill, 90 bpm", weight: 1.0 }],
   negativePrompt: "",
   bpm: 120,
   key: "A",
@@ -231,7 +232,17 @@ export const useAppStore = create<AppState>((set, get) => ({
   setTrackLength: (length) => set({ trackLength: length }),
   setPreGenerateMode: (mode) => set({ preGenerateMode: mode }),
   setSelectedModel: (model) => set({ selectedModel: model }),
-  setLyriaModel: (model) => set({ lyriaModel: model, connectionError: null }),
+  setLyriaModel: (model) => set((state) => {
+    const currentText = state.prompts[0]?.text?.trim() || ""
+    const isDefault = !currentText || currentText === getDefaultPrompt(state.lyriaModel as "realtime" | "lyria2" | "lyria3" | "musicgen")
+    const newPrompt = isDefault ? getDefaultPrompt(model) : currentText
+    return {
+      lyriaModel: model,
+      connectionError: null,
+      selectedModel: model,
+      prompts: [{ ...state.prompts[0], text: newPrompt }, ...state.prompts.slice(1)],
+    }
+  }),
   setVertexProjectId: (projectId) => set({ vertexProjectId: projectId }),
   setVertexRegion: (region) => set({ vertexRegion: region }),
   setVertexAccessToken: (token) => set({ vertexAccessToken: token }),
