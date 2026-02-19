@@ -183,11 +183,17 @@ export function Visualizer({ className }: VisualizerProps) {
       />
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         {hasError ? (
-          <div className="flex flex-col items-center gap-2 px-6 py-4 bg-red-500/20 backdrop-blur-md rounded-xl border border-red-500/50 max-w-md mx-4 shadow-lg shadow-red-500/20">
+          <div className="flex flex-col items-center gap-2 px-6 py-4 bg-red-500/20 backdrop-blur-md rounded-xl border border-red-500/50 max-w-md mx-4 shadow-lg shadow-red-500/20 pointer-events-auto select-text cursor-text">
             <span className="text-lg font-bold text-red-400">Error</span>
             <span className="text-sm text-red-300 text-center whitespace-pre-line">
               {connectionError}
             </span>
+            <button
+              onClick={() => navigator.clipboard.writeText(connectionError || "")}
+              className="mt-1 px-3 py-1 text-xs text-red-300 bg-red-500/20 hover:bg-red-500/40 rounded border border-red-500/30 transition-colors cursor-pointer"
+            >
+              Copy error
+            </button>
           </div>
         ) : isBuffering ? (
           <div className="flex items-center gap-3 px-6 py-3 bg-emerald-500/25 backdrop-blur-md rounded-full border border-emerald-400/50 shadow-lg shadow-emerald-500/20">
